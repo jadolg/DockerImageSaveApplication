@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.fromLTRB(10, 10, 50, 20),
                   child: MaterialButton(
                     onPressed: _fieldsEnabled ? downloadImage : null,
-                    child: Text("Download"),
+                    child: Text("Pull"),
                     color: _fieldsEnabled ? Colors.blue : Colors.grey,
                     textColor: Colors.white,
                   ),
@@ -142,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         backgroundColor: Colors.grey,
                       ),
                     ),
-                    Text("Downloading"),
+                    Text("Obtaining"),
                   ],
                 )
                 : Text(""),
