@@ -134,7 +134,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     textColor: Colors.lightBlueAccent,
                   ),
             _imageURL == "" && !_fieldsEnabled
-                ? Text("Downloading...")
+                ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.grey,
+                      ),
+                    ),
+                    Text("Downloading"),
+                  ],
+                )
                 : Text(""),
             _errorMessage != "" ? Text(_errorMessage) : Text(""),
           ],
