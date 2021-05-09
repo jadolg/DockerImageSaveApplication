@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Text("")
                 : MaterialButton(
                     onPressed: () => launch(_imageURL),
-                    child: Text(_imageURL),
+                    child: Text("${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")}"),
                     textColor: Colors.lightBlueAccent,
                   ),
             _imageURL == "" && !_fieldsEnabled
