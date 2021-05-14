@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:filesize/filesize.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,6 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final imageTextController = TextEditingController(text: "alpine:3.12");
   var _fieldsEnabled = true;
   var _imageURL = "";
+  var _imageSize = 0;
   var _errorMessage = "";
 
   Future pullImageUntilCompleted(String imageName) async {
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
     } while (data['status'] != 'Downloaded');
   }
 
-  Future<String> saveImageUntilCompleted(String imageName) async {
+  Future<Map<String, dynamic>> saveImageUntilCompleted(String imageName) async {
     Map<String, dynamic> data;
     do {
       var image = await http
@@ -62,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         await Future.delayed(const Duration(seconds: 10));
       }
     } while (data['status'] != 'Ready');
-    return data['url'];
+    return data;
   }
 
   downloadImage() {
@@ -70,11 +72,13 @@ class _MyHomePageState extends State<MyHomePage> {
       _fieldsEnabled = false;
       _imageURL = "";
       _errorMessage = "";
+      _imageSize = 0;
     });
     pullImageUntilCompleted(imageTextController.value.text).then((value) {
-      saveImageUntilCompleted(imageTextController.value.text).then((url) {
+      saveImageUntilCompleted(imageTextController.value.text).then((data) {
         setState(() {
-          _imageURL = "https://dockerimagesave.copincha.org/$url";
+          _imageURL = "https://dockerimagesave.copincha.org/${data["url"]}";
+          _imageSize = data["size"];
           _fieldsEnabled = true;
         });
       });
@@ -130,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Text("")
                 : MaterialButton(
                     onPressed: () => launch(_imageURL),
-                    child: Text("${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")}"),
+                    child: Text("${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
                     textColor: Colors.lightBlueAccent,
                   ),
             _imageURL == "" && !_fieldsEnabled
