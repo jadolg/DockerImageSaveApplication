@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:filesize/filesize.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 void main() {
   runApp(MyApp());
@@ -130,41 +131,50 @@ class _MyHomePageState extends State<MyHomePage> {
                 )
               ],
             ),
-            _imageURL == ""
-                ? Text("")
-                : MaterialButton(
-                    onPressed: () => launch(_imageURL),
-                    child: Text(
-                        "${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
-                    textColor: Colors.lightBlueAccent,
+            Visibility(
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: _imageURL != "",
+              child: MaterialButton(
+                onPressed: () => launch(_imageURL),
+                child: Text(
+                    "${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
+                textColor: Colors.lightBlueAccent,
+              ),
+            ),
+            Visibility(
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              visible: _imageURL == "" && !_fieldsEnabled,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                    ),
                   ),
-            _imageURL == "" && !_fieldsEnabled
-                ? Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                        child: CircularProgressIndicator(
-                          backgroundColor: Colors.grey,
-                        ),
-                      ),
-                      Text("Obtaining"),
-                    ],
-                  )
-                : Text(""),
-            _errorMessage != "" ? Text(_errorMessage) : Text(""),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 400),
-                  child: Text("How to use:\n"
-                      "1. Enter image and tag that you want to download in the text box\n"
-                      "2. Click pull and wait for the download link to appear\n"
+                  Text("Obtaining"),
+                ],
+              ),
+            ),
+            Visibility(
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: _errorMessage != "",
+                child: Text(_errorMessage)),
+            Flexible(
+              child: Markdown(
+                  selectable: true,
+                  data: "# How to use:\n"
+                      "1. Enter image and tag that you want to download in the text box (**image:tag**)\n"
+                      "2. Click **pull** and wait for the download link to appear\n"
                       "3. Download the zip file\n"
                       "4. Unzip the file in your computer\n"
-                      "5. Load the docker image in your local docker `docker load -i image_tag.tar`"),
-                ),
-              ),
+                      "5. Load the **docker image** in your local **docker** `docker load -i image_tag.tar`"),
             ),
           ],
         ),
