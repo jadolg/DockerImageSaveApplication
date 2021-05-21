@@ -134,23 +134,38 @@ class _MyHomePageState extends State<MyHomePage> {
                 ? Text("")
                 : MaterialButton(
                     onPressed: () => launch(_imageURL),
-                    child: Text("${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
+                    child: Text(
+                        "${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
                     textColor: Colors.lightBlueAccent,
                   ),
             _imageURL == "" && !_fieldsEnabled
                 ? Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.grey,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.grey,
+                        ),
                       ),
-                    ),
-                    Text("Obtaining"),
-                  ],
-                )
+                      Text("Obtaining"),
+                    ],
+                  )
                 : Text(""),
             _errorMessage != "" ? Text(_errorMessage) : Text(""),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 400),
+                  child: Text("How to use:\n"
+                      "1. Enter image and tag that you want to download in the text box\n"
+                      "2. Click pull and wait for the download link to appear\n"
+                      "3. Download the zip file\n"
+                      "4. Unzip the file in your computer\n"
+                      "5. Load the docker image in your local docker `docker load -i image_tag.tar`"),
+                ),
+              ),
+            ),
           ],
         ),
       ),
