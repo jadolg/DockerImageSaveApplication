@@ -170,7 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
               constraints: BoxConstraints.tight(Size.fromRadius(300)),
               child: Markdown(
                   selectable: true,
-                  data: "# How to use:\n"
+                  data: "# What's this:\n"
+                      "This application downloads **Docker** images compressed as zip files.\n\n"
+                      "It is intended to be used in places like *Cuba* where the access to DockerHub is blocked.\n\n"
+                      "# How to use:\n"
                       "1. Enter image and tag that you want to download in the text box (**image:tag**)\n"
                       "2. Click **pull** and wait for the download link to appear\n"
                       "3. Download the zip file\n"
