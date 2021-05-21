@@ -166,7 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 maintainState: true,
                 visible: _errorMessage != "",
                 child: Text(_errorMessage)),
-            Flexible(
+            Container(
+              constraints: BoxConstraints.tight(Size.fromRadius(300)),
               child: Markdown(
                   selectable: true,
                   data: "# How to use:\n"
