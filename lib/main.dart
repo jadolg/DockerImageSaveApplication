@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, dynamic> data;
     do {
       var image = await http
-          .get(Uri.https('dockerimagesave.copincha.org', 'pull/$imageName'));
+          .get(Uri.https('dockerimagesave.akiel.dev', 'pull/$imageName'));
       data = jsonDecode(image.body);
       if (data['status'] == 'Error') {
         throw ("Error pulling image $imageName");
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Map<String, dynamic> data;
     do {
       var image = await http
-          .get(Uri.https('dockerimagesave.copincha.org', 'save/$imageName'));
+          .get(Uri.https('dockerimagesave.akiel.dev', 'save/$imageName'));
       data = jsonDecode(image.body);
       if (data['status'] != 'Ready') {
         await Future.delayed(const Duration(seconds: 10));
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     pullImageUntilCompleted(imageTextController.value.text).then((value) {
       saveImageUntilCompleted(imageTextController.value.text).then((data) {
         setState(() {
-          _imageURL = "https://dockerimagesave.copincha.org/${data["url"]}";
+          _imageURL = "https://dockerimagesave.akiel.dev/${data["url"]}";
           _imageSize = data["size"];
           _fieldsEnabled = true;
         });
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: MaterialButton(
                 onPressed: () => launch(_imageURL),
                 child: Text(
-                    "${_imageURL.replaceFirst("https://dockerimagesave.copincha.org/download/", "")} [${filesize(_imageSize)}]"),
+                    "${_imageURL.replaceFirst("https://dockerimagesave.akiel.dev/download/", "")} [${filesize(_imageSize)}]"),
                 textColor: Colors.lightBlueAccent,
               ),
             ),
