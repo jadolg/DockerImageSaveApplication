@@ -104,24 +104,26 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(50, 8, 50, 20),
+                    padding: const EdgeInsets.fromLTRB(50, 15, 50, 20),
                     child: TextField(
                       autofocus: true,
                       onSubmitted: (value) => downloadImage(),
                       style: _fieldsEnabled
-                          ? TextStyle(color: Colors.black)
+                          ? TextStyle(color: Colors.black, )
                           : TextStyle(color: Colors.grey),
                       enabled: _fieldsEnabled,
                       controller: imageTextController,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blueAccent, width: 5.0),
+                          ),
                           hintText: 'Enter image name Eg: alpine:3.12',
                           labelText: "Image"),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 50, 20),
+                  padding: const EdgeInsets.fromLTRB(10, 15, 50, 20),
                   child: MaterialButton(
                     onPressed: _fieldsEnabled ? downloadImage : null,
                     child: Text("Pull"),
